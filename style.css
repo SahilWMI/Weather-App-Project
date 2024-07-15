@@ -59,3 +59,8 @@ p {
     font-weight: bold;
     margin-bottom: 25px;
 }
+.descDisplay {
+    font-style: italic;
+    font-weight: bold;
+    font-size: 2rem;
+}
