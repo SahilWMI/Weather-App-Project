@@ -1,7 +1,7 @@
 const weatherForm = document.querySelector(".weatherForm");
-const cityInput = document.querySelector(".cityinput");
+const cityInput = document.querySelector(".cityInput");
 const card = document.querySelector(".card");
-const apikey = "22dad77cd3bb260aa2a5773bb02b0e1a";
+const apiKey = "22dad77cd3bb260aa2a5773bb02b0e1a";
 
 weatherForm.addEventListener('submit',async event => {
 
@@ -35,37 +35,43 @@ async function getWeatherData(city){
     return await response.json();
 
 }
-function displayWeatherInfo(data){
+function displayWeatherInfo(data) {
+    const {
+        name: city,
+        main: { temp, humidity },
+        weather: [{ description, id }]
+    } = data;
 
-    const {name: city,
-            main: {temp, humidity},
-             weather: [{description, id}]} = data;
+    card.textContent = '';
+    card.style.display = "flex";
 
-             card.textContent = '';
-             card.computedStyleMap.display = "flex;"
+    const cityDisplay = document.createElement("h1");
+    const tempDisplay = document.createElement("p");
+    const humidityDisplay = document.createElement("p");
+    const descDisplay = document.createElement("p");
+    const weatherEmoji = document.createElement("p");
 
-             const cityDisplay = document.createElement("h1");
-             const tempDisplay = document.createElement("p");
-             const humidityDisplay = document.createElement("p");
-             const descDisplay = document.createElement("p");
-             const weatherEmoji = document.createElement("p");
+    cityDisplay.textContent = city;
+    tempDisplay.textContent = `Temperature: ${(temp - 273.15).toFixed(1)}°C`;
+    humidityDisplay.textContent = `Humidity: ${humidity}%`;
+    descDisplay.textContent = `Description: ${description}`;
+    weatherEmoji.textContent = getWeatherEmoji(id);
 
-             cityDisplay.textContent() = 'city';
-
-             cityDisplay.appendChild(cityDisplay);
+    card.appendChild(cityDisplay);
+    card.appendChild(tempDisplay);
+    card.appendChild(humidityDisplay);
+    card.appendChild(descDisplay);
+    card.appendChild(weatherEmoji);
 }
 function getWeatherEmoji(weatherId){
 
 }
-function displayError(message){
-
+function displayError(message) {
     const errorDisplay = document.createElement("p");
-
-    errorDisplay.textContent =  message;
+    errorDisplay.textContent = message;
     errorDisplay.classList.add("errorDisplay");
 
-    card.textContent= "";
-    card.style.display ="flex";
+    card.textContent = "";
+    card.style.display = "flex";
     card.appendChild(errorDisplay);
-
 }
